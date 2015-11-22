@@ -1,5 +1,8 @@
 package controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import domain.SimplePojo;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -7,8 +10,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class HelloController {
 
     @RequestMapping("/")
-    public String index() {
-        return "Greetings from Spring Boot!";
+    public String index() throws JsonProcessingException {
+        SimplePojo simplePojo = new SimplePojo();
+        simplePojo.setId(10);
+        simplePojo.setName("my name");
+
+        ObjectMapper mapper = new ObjectMapper();
+
+        return mapper.writeValueAsString(simplePojo);
     }
 
 }
