@@ -40,7 +40,6 @@ public class PersonServiceTest {
         PersonService personService = new PersonService();
 
         Person person = personService.get("1");
-
         assertThat(person.getMass(), is(77));
     }
 }

@@ -1,7 +1,13 @@
 package service;
 
 import model.Person;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.Arrays;
 
 public class PersonService {
 
@@ -12,23 +18,18 @@ public class PersonService {
     }
 
     public Person get(String id) {
-        Person person = new Person();
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.setMessageConverters(restTemplate.getMessageConverters());
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("User-Agent", "Mozilla/5.0");
+        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+        HttpEntity<String> entity = new HttpEntity<String>(headers);
 
-//        RestTemplate restTemplate = new RestTemplate();
-//        restTemplate.headForHeaders(this.baseUrlPerson + id + '/');
-//        Person person = restTemplate.getForObject(this.baseUrlPerson + id + '/', Person.class);
-
-        if (id.equals("1")){
-            person.setSpecieId("1");
-        } else if (id.equals("2")){
-            person.setSpecieId("2");
-        } else if(id.equals("13")) {
-            person.setSpecieId("3");
-        }
-
-        return person;
+        return restTemplate.exchange(getUrl(id), HttpMethod.GET, entity, Person.class).getBody();
     }
 
-
+    private String getUrl(String id) {
+        return this.baseUrlPerson + id + '/';
+    }
 
 }
