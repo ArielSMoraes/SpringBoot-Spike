@@ -2,12 +2,11 @@ package model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import java.awt.*;
 import java.util.ArrayList;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Person {
-    private Integer mass;
+    private String mass;
     private String specieId;
     private ArrayList<String> species;
 
@@ -15,15 +14,24 @@ public class Person {
     }
 
     public String getSpecieId() {
-        String stringSpecies = species.get(0);
-        return stringSpecies.substring(stringSpecies.length() -2, stringSpecies.length() -1);
+        if(species.isEmpty()){
+            return "unknown";
+        }
+        String stringSpecie = species.get(0);
+        return getIdSpecie(stringSpecie);
     }
 
-    public Integer getMass() {
+    private String getIdSpecie(String stringSpecies) {
+        String[] splitUrlSpecie = stringSpecies.split("/");
+        String id = splitUrlSpecie[splitUrlSpecie.length-1];
+        return id;
+    }
+
+    public String getMass() {
         return mass;
     }
 
-    public void setMass(Integer mass) {
+    public void setMass(String mass) {
         this.mass = mass;
     }
 

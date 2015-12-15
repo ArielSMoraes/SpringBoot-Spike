@@ -1,37 +1,39 @@
 package service;
 
-import model.GroupSpecies;
+import model.Person;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class RescueService{
 
-    private final ArrayList peopleArrayList = new ArrayList();
+    private HashMap<String, ArrayList> species = new HashMap<String, ArrayList>();
+    private final PersonService personService;
 
-    public ArrayList<GroupSpecies> groupBySpecies(String people) {
+    public RescueService(PersonService personService) {
+        this.personService = personService;
+    }
 
-        String[] split = people.split(",");
-        GroupSpecies human = new GroupSpecies("Human");
+    public HashMap<String, ArrayList> groupBySpecies(String people) {
 
-        for (String person : split) {
-            human.setPeople(person);
+        String[] idPeople = people.split(",");
+
+        for (String personId : idPeople) {
+            Person person = personService.get(personId);
+
+            if(species.containsKey(person.getSpecieId())){
+                ArrayList<Person> peopleList;
+                peopleList = species.get(person.getSpecieId());
+                peopleList.add(person);
+            } else {
+                ArrayList<Person> peopleList = new ArrayList<Person>();
+                peopleList.add(person);
+                species.put(person.getSpecieId(), peopleList);
+            }
+            System.out.println(person.getSpecieId());
         }
-        
-        peopleArrayList.add(human);
 
-        peopleArrayList.add(human);
-
-        peopleArrayList.add(human);
-
-        peopleArrayList.add(human);
-
-        peopleArrayList.add(human);
-
-        peopleArrayList.add(human);
-
-        peopleArrayList.add(human);
-
-        return peopleArrayList;
+        return species;
     }
 
 }

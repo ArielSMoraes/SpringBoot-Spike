@@ -40,6 +40,24 @@ public class PersonServiceTest {
         PersonService personService = new PersonService();
 
         Person person = personService.get("1");
-        assertThat(person.getMass(), is(77));
+        assertThat(person.getMass(), is("77"));
+    }
+
+    @Test
+    public void testCreatePersonWithoutSpecie() throws Exception {
+        PersonService personService = new PersonService();
+
+        Person person = personService.get("42");
+
+        assertThat(person.getSpecieId(), is("unknown"));
+    }
+
+    @Test
+    public void testCreatePersonWithSpecieTypeHavingTwoNumber() throws Exception {
+        PersonService personService = new PersonService();
+
+        Person person = personService.get("33");
+
+        assertThat(person.getSpecieId(), is("11"));
     }
 }
