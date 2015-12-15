@@ -20,20 +20,30 @@ public class RescueService{
 
         for (String personId : idPeople) {
             Person person = personService.get(personId);
-
-            if(species.containsKey(person.getSpecieId())){
-                ArrayList<Person> peopleList;
-                peopleList = species.get(person.getSpecieId());
-                peopleList.add(person);
-            } else {
-                ArrayList<Person> peopleList = new ArrayList<Person>();
-                peopleList.add(person);
-                species.put(person.getSpecieId(), peopleList);
-            }
-            System.out.println(person.getSpecieId());
+            addPersonToSpecieGroup(person);
         }
 
         return species;
+    }
+
+    private void addPersonToSpecieGroup(Person person) {
+        if(species.containsKey(person.getSpecieId())){
+            addToExistingSpecie(person);
+        } else {
+            addToNewSpecie(person);
+        }
+    }
+
+    private void addToNewSpecie(Person person) {
+        ArrayList<Person> peopleList = new ArrayList<Person>();
+        peopleList.add(person);
+        species.put(person.getSpecieId(), peopleList);
+    }
+
+    private void addToExistingSpecie(Person person) {
+        ArrayList<Person> peopleList;
+        peopleList = species.get(person.getSpecieId());
+        peopleList.add(person);
     }
 
 }
