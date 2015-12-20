@@ -5,12 +5,12 @@ import model.Person;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class RescueService{
+public class SpecieGroupingService {
 
     private HashMap<String, ArrayList> species = new HashMap<String, ArrayList>();
     private final PersonService personService;
 
-    public RescueService(PersonService personService) {
+    public SpecieGroupingService(PersonService personService) {
         this.personService = personService;
     }
 
