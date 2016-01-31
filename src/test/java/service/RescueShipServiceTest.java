@@ -14,10 +14,10 @@ public class RescueShipServiceTest {
     @Test
     public void testOneTravelForFourHumans() throws Exception {
         PersonService personService = new PersonService();
-        ShipService shipServoce = new ShipService();
+        ShipService shipService = new ShipService();
         SpecieGroupingService specieGroupingService = new SpecieGroupingService(personService);
         HashMap<String, ArrayList> peopleToRescue = specieGroupingService.groupBySpecies("1,1,1,1");
-        Ship ship = shipServoce.get("72");
+        Ship ship = shipService.get("72");
 
         RescueShipService rescueShip = new RescueShipService(ship);
         Integer countRescueTravels = rescueShip.normalRescue(peopleToRescue);
@@ -28,10 +28,10 @@ public class RescueShipServiceTest {
     @Test
     public void testOnlyTwoTravelsForTwoKindsOfSpicies() throws Exception {
         PersonService personService = new PersonService();
-        ShipService shipServoce = new ShipService();
+        ShipService shipService = new ShipService();
         SpecieGroupingService specieGroupingService = new SpecieGroupingService(personService);
         HashMap<String, ArrayList> peopleToRescue = specieGroupingService.groupBySpecies("1,1,1,1,55,55,55,55");
-        Ship ship = shipServoce.get("72");
+        Ship ship = shipService.get("72");
 
         RescueShipService rescueShip = new RescueShipService(ship);
         Integer countRescueTravels = rescueShip.normalRescue(peopleToRescue);
@@ -42,14 +42,28 @@ public class RescueShipServiceTest {
     @Test
     public void testThreeTravelsForElevenHumans() throws Exception {
         PersonService personService = new PersonService();
-        ShipService shipServoce = new ShipService();
+        ShipService shipService = new ShipService();
         SpecieGroupingService specieGroupingService = new SpecieGroupingService(personService);
         HashMap<String, ArrayList> peopleToRescue = specieGroupingService.groupBySpecies("1,1,1,1,1,1,1,1,1,1,1");
-        Ship ship = shipServoce.get("72");
+        Ship ship = shipService.get("72");
 
         RescueShipService rescueShip = new RescueShipService(ship);
         Integer countRescueTravels = rescueShip.normalRescue(peopleToRescue);
 
         assertThat(countRescueTravels, is(3));
+    }
+
+    @Test
+    public void testRescueTheOldOnes() throws Exception {
+        PersonService personService = new PersonService();
+        ShipService shipService = new ShipService();
+        SpecieGroupingService specieGroupingService = new SpecieGroupingService(personService);
+        HashMap<String, ArrayList> peopleToRescue = specieGroupingService.groupBySpecies("1,4,5,6,7");
+        Ship ship = shipService.get("72");
+
+        RescueShipService rescueShip = new RescueShipService(ship);
+        Integer countRescueTravels = rescueShip.normalRescue(peopleToRescue);
+
+        assertThat(countRescueTravels, is(1));
     }
 }
