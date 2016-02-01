@@ -1,1 +1,1 @@
-Just some spikes with Spring
+Starwars api consumer, to rescue people
