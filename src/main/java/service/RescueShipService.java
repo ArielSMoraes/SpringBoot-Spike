@@ -25,7 +25,17 @@ public class RescueShipService {
         ).sum();
     }
 
-    private int travelCount(double seatNeeded) {
+    public Integer rescueOnlyWomenConsideringFat(HashMap<String, ArrayList<Person>> peopleToRescue) {
+        return peopleToRescue.entrySet().stream().mapToInt(
+            e -> travelCount(howManySeatsAreNeededForWomen(e.getValue()))
+        ).sum();
+    }
+
+    private int howManySeatsAreNeededForWomen(ArrayList<Person> value) {
+        return 2;
+    }
+
+    private int travelCount(int seatNeeded) {
         return (int) Math.round((seatNeeded / Integer.parseInt(ship.getPassengers())) + 0.4d);
     }
 

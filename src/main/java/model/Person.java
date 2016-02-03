@@ -8,6 +8,7 @@ public class Person {
     private String mass;
     private String birth_year;
     private String specieId;
+    private String gender;
     private ArrayList<String> species;
 
     public Person() {
@@ -52,5 +53,13 @@ public class Person {
 
     public void setBirth_year(String birth_year) {
         this.birth_year = birth_year;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 }
