@@ -10,11 +10,12 @@ import org.springframework.web.client.RestTemplate;
 import java.util.Arrays;
 
 public class PersonService {
-
     private String baseUrlPerson;
+    private Class<Person> responseType;
 
     public PersonService() {
         this.baseUrlPerson = "http://swapi.co/api/people/";
+        responseType = Person.class;
     }
 
     public Person get(String id) {
@@ -25,7 +26,11 @@ public class PersonService {
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         HttpEntity<String> entity = new HttpEntity<String>(headers);
 
-        return restTemplate.exchange(getUrl(id), HttpMethod.GET, entity, Person.class).getBody();
+        return getBody(id, restTemplate, entity);
+    }
+
+    private Person getBody(String id, RestTemplate restTemplate, HttpEntity<String> entity) {
+        return restTemplate.exchange(getUrl(id), HttpMethod.GET, entity, responseType).getBody();
     }
 
     private String getUrl(String id) {

@@ -1,6 +1,5 @@
 package service;
 
-
 import model.Ship;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -12,9 +11,11 @@ import java.util.Arrays;
 
 public class ShipService {
     private String baseUrlPerson;
+    private Class<Ship> responseType;
 
     public ShipService() {
         this.baseUrlPerson = "http://swapi.co/api/vehicles/";
+        responseType = Ship.class;
     }
 
     public Ship get(String id) {
@@ -25,7 +26,11 @@ public class ShipService {
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         HttpEntity<String> entity = new HttpEntity<String>(headers);
 
-        return restTemplate.exchange(getUrl(id), HttpMethod.GET, entity, Ship.class).getBody();
+        return getBody(id, restTemplate, entity);
+    }
+
+    private Ship getBody(String id, RestTemplate restTemplate, HttpEntity<String> entity) {
+        return restTemplate.exchange(getUrl(id), HttpMethod.GET, entity, responseType).getBody();
     }
 
     private String getUrl(String id) {
