@@ -14,34 +14,31 @@ public class RescueShipService {
     }
 
     public Integer normalRescue(HashMap<String, ArrayList<Person>> peopleToRescue) {
-        int travels = peopleToRescue.entrySet().stream().mapToInt(
-                e -> (int) Math.round(((double)e.getValue().size() / Integer.parseInt(ship.getPassengers())) + 0.4d)
+        return peopleToRescue.entrySet().stream().mapToInt(
+                e -> travelCount(e.getValue().size())
         ).sum();
-
-        return travels;
     }
 
     public Integer rescueConsideringFats(HashMap<String, ArrayList<Person>> peopleToRescue) {
-        int travels = peopleToRescue.entrySet().stream().mapToInt(
-            e -> {
-                int seatNeeded = howManySeatsAreNeeded(e.getValue());
-                return (int) Math.round(((double) seatNeeded / Integer.parseInt(ship.getPassengers())) + 0.4d);
-            }
+        return peopleToRescue.entrySet().stream().mapToInt(
+            e -> travelCount(howManySeatsAreNeeded(e.getValue()))
         ).sum();
+    }
 
-        return travels;
+    private int travelCount(double seatNeeded) {
+        return (int) Math.round((seatNeeded / Integer.parseInt(ship.getPassengers())) + 0.4d);
     }
 
     private int howManySeatsAreNeeded(ArrayList<Person> people) {
         int countFats = people.stream()
-            .filter(person -> Integer.parseInt(person.getMass()) > 100)
+            .filter(person -> person.getMass().equals("unknown") || Integer.parseInt(person.getMass()) > 100)
             .mapToInt(e -> 1)
             .sum();
         return countFats + people.size();
     }
 
     public Integer rescueOldOnes(HashMap<String, ArrayList<Person>> peopleToRescue) {
-        ArrayList<Person> oldOnesToRescue = new ArrayList<Person>();
+        ArrayList<Person> oldOnesToRescue = new ArrayList<>();
 
         for (String key : peopleToRescue.keySet()){
             ArrayList<Person> peopleList = peopleToRescue.get(key);

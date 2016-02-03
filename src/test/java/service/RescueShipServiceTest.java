@@ -108,4 +108,15 @@ public class RescueShipServiceTest {
 
         assertThat(countRescueTravels, is(2));
     }
+
+    @Test
+    public void testRescueFourHumansOneHasUnknowMassNeededTwoTravels() throws Exception {
+        ship = shipService.get("72");
+        peopleToRescue = specieGroupingService.groupBySpecies("1,1,1,12");
+        RescueShipService rescueShip = new RescueShipService(ship);
+
+        Integer countRescueTravels = rescueShip.rescueConsideringFats(peopleToRescue);
+
+        assertThat(countRescueTravels, is(2));
+    }
 }
