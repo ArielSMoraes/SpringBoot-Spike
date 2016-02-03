@@ -1,5 +1,6 @@
 package service;
 
+import model.Person;
 import model.Ship;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,7 +18,7 @@ public class RescueShipServiceTest {
     private PersonService personService;
     private Ship ship;
     private ShipService shipService;
-    private HashMap<String, ArrayList> peopleToRescue;
+    private HashMap<String, ArrayList<Person>> peopleToRescue;
     private SpecieGroupingService specieGroupingService;
 
     @Before
@@ -91,10 +92,20 @@ public class RescueShipServiceTest {
         ship = shipService.get("72");
         peopleToRescue = specieGroupingService.groupBySpecies("15,15,16,16,55,55,29,29,31,31,59,59,33,33,40,40,8,8");
         RescueShipService rescueShip = new RescueShipService(ship);
-        System.out.print(peopleToRescue.size());
 
         Integer countRescueTravels = rescueShip.rescueOldOnes(peopleToRescue);
 
         assertThat(countRescueTravels, is(3));
+    }
+
+    @Test
+    public void testRescueFourHumansOneHas100MassNeededTwoTravels() throws Exception {
+        ship = shipService.get("72");
+        peopleToRescue = specieGroupingService.groupBySpecies("1,1,1,4");
+        RescueShipService rescueShip = new RescueShipService(ship);
+
+        Integer countRescueTravels = rescueShip.rescueConsideringFats(peopleToRescue);
+
+        assertThat(countRescueTravels, is(2));
     }
 }

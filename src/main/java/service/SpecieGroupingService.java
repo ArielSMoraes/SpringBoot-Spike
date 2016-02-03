@@ -7,14 +7,14 @@ import java.util.HashMap;
 
 public class SpecieGroupingService {
 
-    private HashMap<String, ArrayList> species = new HashMap<String, ArrayList>();
+    private HashMap<String, ArrayList<Person>> species = new HashMap<>();
     private final PersonService personService;
 
     public SpecieGroupingService(PersonService personService) {
         this.personService = personService;
     }
 
-    public HashMap<String, ArrayList> groupBySpecies(String people) {
+    public HashMap<String, ArrayList<Person>> groupBySpecies(String people) {
 
         String[] idPeople = people.split(",");
 
