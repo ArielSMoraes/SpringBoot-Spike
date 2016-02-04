@@ -121,6 +121,17 @@ public class RescueShipServiceTest {
     }
 
     @Test
+    public void testRescueTwoKindSpeciesMassAbove100() throws Exception {
+        ship = shipService.get("72");
+        peopleToRescue = specieGroupingService.groupBySpecies("20,1,12");
+        RescueShipService rescueShip = new RescueShipService(ship);
+
+        Integer countRescueTravels = rescueShip.rescueConsideringFats(peopleToRescue);
+
+        assertThat(countRescueTravels, is(2));
+    }
+
+    @Test
     public void testRescueOnlyWomen() throws Exception {
         ship = shipService.get("72");
         peopleToRescue = specieGroupingService.groupBySpecies("5,5,5,5,5,1,1,1,1");

@@ -26,25 +26,38 @@ public class RescueShipService {
     }
 
     public Integer rescueOnlyWomenConsideringFat(HashMap<String, ArrayList<Person>> peopleToRescue) {
-        return peopleToRescue.entrySet().stream().mapToInt(
-            e -> travelCount(howManySeatsAreNeededForWomen(e.getValue()))
+        return peopleToRescue.entrySet().stream()
+                .filter(e -> e.getKey().equals("1"))
+                .mapToInt(e -> travelCount(howManySeatsAreNeededForWomen(e.getValue()))
         ).sum();
     }
 
-    private int howManySeatsAreNeededForWomen(ArrayList<Person> value) {
-        return 2;
+    private int howManySeatsAreNeededForWomen(ArrayList<Person> people) {
+        return people.stream()
+                .filter(person -> person.getGender().equals("female"))
+                .mapToInt(
+                        (e) -> {
+                            ArrayList<Person> personTemp = new ArrayList<>();
+                            personTemp.add(e);
+                            return 1 + getFatsSeats(personTemp);
+                        }
+                )
+                .sum();
     }
 
-    private int travelCount(int seatNeeded) {
+    private int travelCount(double seatNeeded) {
         return (int) Math.round((seatNeeded / Integer.parseInt(ship.getPassengers())) + 0.4d);
     }
 
     private int howManySeatsAreNeeded(ArrayList<Person> people) {
-        int countFats = people.stream()
+        return getFatsSeats(people) + people.size();
+    }
+
+    private int getFatsSeats(ArrayList<Person> people) {
+        return people.stream()
             .filter(person -> person.getMass().equals("unknown") || Integer.parseInt(person.getMass()) > 100)
             .mapToInt(e -> 1)
             .sum();
-        return countFats + people.size();
     }
 
     public Integer rescueOldOnes(HashMap<String, ArrayList<Person>> peopleToRescue) {
