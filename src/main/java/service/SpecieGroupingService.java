@@ -8,9 +8,9 @@ import java.util.HashMap;
 public class SpecieGroupingService {
 
     private HashMap<String, ArrayList<Person>> species = new HashMap<>();
-    private final PersonService personService;
+    private final ApiStarWars personService;
 
-    public SpecieGroupingService(PersonService personService) {
+    public SpecieGroupingService(ApiStarWars personService) {
         this.personService = personService;
     }
 
@@ -19,7 +19,7 @@ public class SpecieGroupingService {
         String[] idPeople = people.split(",");
 
         for (String personId : idPeople) {
-            Person person = personService.get(personId);
+            Person person = personService.getPerson(personId);
             addPersonToSpecieGroup(person);
         }
 

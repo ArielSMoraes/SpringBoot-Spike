@@ -15,22 +15,22 @@ import static org.hamcrest.core.Is.is;
 
 public class RescueShipServiceTest {
 
-    private PersonService personService;
+    private ApiStarWars personService;
+    private ApiStarWars shipService;
     private Ship ship;
-    private ShipService shipService;
     private HashMap<String, ArrayList<Person>> peopleToRescue;
     private SpecieGroupingService specieGroupingService;
 
     @Before
     public void setUp() throws Exception {
-        personService = new PersonService();
-        shipService = new ShipService();
+        personService = new ApiStarWars();
+        shipService = new ApiStarWars();
         specieGroupingService = new SpecieGroupingService(personService);
     }
 
     @Test
     public void testOneTravelForFourHumans() throws Exception {
-        ship = shipService.get("72");
+        ship = shipService.getShip("72");
         peopleToRescue = specieGroupingService.groupBySpecies("1,1,1,1");
         RescueShipService rescueShip = new RescueShipService(ship);
 
@@ -41,7 +41,7 @@ public class RescueShipServiceTest {
 
     @Test
     public void testOnlyTwoTravelsForTwoKindsOfSpicies() throws Exception {
-        ship = shipService.get("72");
+        ship = shipService.getShip("72");
         peopleToRescue = specieGroupingService.groupBySpecies("1,1,1,1,55,55,55,55");
         RescueShipService rescueShip = new RescueShipService(ship);
 
@@ -52,7 +52,7 @@ public class RescueShipServiceTest {
 
     @Test
     public void testThreeTravelsForElevenHumans() throws Exception {
-        ship = shipService.get("72");
+        ship = shipService.getShip("72");
         peopleToRescue = specieGroupingService.groupBySpecies("1,1,1,1,1,1,1,1,1");
         RescueShipService rescueShip = new RescueShipService(ship);
 
@@ -63,7 +63,7 @@ public class RescueShipServiceTest {
 
     @Test
     public void testRescueTheOldOnesFirst() throws Exception {
-        ship = shipService.get("72");
+        ship = shipService.getShip("72");
         peopleToRescue = specieGroupingService.groupBySpecies("1,4,5,6,7");
         RescueShipService rescueShip = new RescueShipService(ship);
         Object removedOldOne = peopleToRescue.get("1").get(3);
@@ -77,7 +77,7 @@ public class RescueShipServiceTest {
 
     @Test
     public void testRescueOldOneHuman() throws Exception {
-        ship = shipService.get("72");
+        ship = shipService.getShip("72");
         peopleToRescue = specieGroupingService.groupBySpecies("1,4,5,6,7,32");
         RescueShipService rescueShip = new RescueShipService(ship);
         Object removedOldOne = peopleToRescue.get("1").get(5);
@@ -89,7 +89,7 @@ public class RescueShipServiceTest {
 
     @Test
     public void testRescueOldOneOfManySpecies() throws Exception {
-        ship = shipService.get("72");
+        ship = shipService.getShip("72");
         peopleToRescue = specieGroupingService.groupBySpecies("15,15,16,16,55,55,29,29,31,31,59,59,33,33,40,40,8,8");
         RescueShipService rescueShip = new RescueShipService(ship);
 
@@ -100,7 +100,7 @@ public class RescueShipServiceTest {
 
     @Test
     public void testRescueFourHumansOneHas100MassNeededTwoTravels() throws Exception {
-        ship = shipService.get("72");
+        ship = shipService.getShip("72");
         peopleToRescue = specieGroupingService.groupBySpecies("1,1,1,4");
         RescueShipService rescueShip = new RescueShipService(ship);
 
@@ -111,7 +111,7 @@ public class RescueShipServiceTest {
 
     @Test
     public void testRescueFourHumansOneHasUnknowMassNeededTwoTravels() throws Exception {
-        ship = shipService.get("72");
+        ship = shipService.getShip("72");
         peopleToRescue = specieGroupingService.groupBySpecies("1,1,1,12");
         RescueShipService rescueShip = new RescueShipService(ship);
 
@@ -122,7 +122,7 @@ public class RescueShipServiceTest {
 
     @Test
     public void testRescueTwoKindSpeciesMassAbove100() throws Exception {
-        ship = shipService.get("72");
+        ship = shipService.getShip("72");
         peopleToRescue = specieGroupingService.groupBySpecies("20,1,12");
         RescueShipService rescueShip = new RescueShipService(ship);
 
@@ -133,7 +133,7 @@ public class RescueShipServiceTest {
 
     @Test
     public void testRescueOnlyWomen() throws Exception {
-        ship = shipService.get("72");
+        ship = shipService.getShip("72");
         peopleToRescue = specieGroupingService.groupBySpecies("5,5,5,5,5,1,1,1,1");
         RescueShipService rescueShip = new RescueShipService(ship);
 

@@ -13,7 +13,7 @@ public class SpecieGroupingServiceTest {
 
     @Test
     public void testGroupOneHumanTwoDroid() throws Exception {
-        PersonService personService = new PersonService();
+        ApiStarWars personService = new ApiStarWars();
         SpecieGroupingService specieGroupingService = new SpecieGroupingService(personService);
 
         HashMap<String, ArrayList<Person>> groupSpecies = specieGroupingService.groupBySpecies("1,2,3");
@@ -24,7 +24,7 @@ public class SpecieGroupingServiceTest {
 
     @Test
     public void testGroupThreeHumans() throws Exception {
-        PersonService personService = new PersonService();
+        ApiStarWars personService = new ApiStarWars();
         SpecieGroupingService specieGroupingService = new SpecieGroupingService(personService);
 
         HashMap<String, ArrayList<Person>> groupSpecies = specieGroupingService.groupBySpecies("1,4,5");
@@ -34,7 +34,7 @@ public class SpecieGroupingServiceTest {
 
     @Test
     public void testPeopleGroupingBySpecies() throws Exception {
-        PersonService personService = new PersonService();
+        ApiStarWars personService = new ApiStarWars();
         SpecieGroupingService specieGroupingService = new SpecieGroupingService(personService);
 
         HashMap<String, ArrayList<Person>> groupSpecies = specieGroupingService.groupBySpecies("1,1,5,5,33,42,45,50,55,66,67,68,80");
